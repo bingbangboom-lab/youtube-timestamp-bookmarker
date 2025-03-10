@@ -1,0 +1,749 @@
+/**
+ * YouTube Timestamp Bookmarker
+ * Popup Styles
+ */
+
+ :root {
+  --primary-color: #ff0000;
+  --dark-primary: #cc0000;
+  --light-bg: #ffffff;
+  --light-text: #0f0f0f;
+  --light-border: #e0e0e0;
+  --light-hover: #f5f5f5;
+  --dark-bg: #212121;
+  --dark-secondary-bg: #1a1a1a;
+  --dark-text: #f1f1f1;
+  --dark-border: #333333;
+  --dark-hover: #2a2a2a;
+}
+
+/* Base styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Roboto', Arial, sans-serif;
+  font-size: 14px;
+  color: var(--light-text);
+  background-color: var(--light-bg);
+}
+
+.ytbm-popup {
+  width: 400px;
+  min-height: 500px;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Header */
+.ytbm-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px;
+  border-bottom: 1px solid var(--light-border);
+}
+
+.ytbm-header h1 {
+  font-size: 18px;
+  color: var(--primary-color);
+}
+
+.ytbm-toggle {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 12px;
+}
+
+/* Switch for dark mode */
+.ytbm-switch {
+  position: relative;
+  display: inline-block;
+  width: 40px;
+  height: 20px;
+  min-width: 40px;
+  margin-left: 10px;
+}
+
+.ytbm-switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.ytbm-slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  transition: .4s;
+  border-radius: 34px;
+}
+
+.ytbm-slider:before {
+  position: absolute;
+  content: "";
+  height: 16px;
+  width: 16px;
+  left: 2px;
+  bottom: 2px;
+  background-color: white;
+  transition: .4s;
+  border-radius: 50%;
+}
+
+input:checked + .ytbm-slider {
+  background-color: var(--primary-color);
+}
+
+input:checked + .ytbm-slider:before {
+  transform: translateX(20px);
+}
+
+/* Tabs */
+.ytbm-tabs {
+  display: flex;
+  border-bottom: 1px solid var(--light-border);
+}
+
+.ytbm-tab-btn {
+  flex: 1;
+  padding: 10px;
+  text-align: center;
+  background: none;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  font-size: 14px;
+  color: var(--light-text);
+}
+
+.ytbm-tab-btn:hover {
+  background-color: var(--light-hover);
+}
+
+.ytbm-tab-btn.active {
+  border-bottom: 3px solid var(--primary-color);
+  font-weight: 500;
+}
+
+/* Tab Content */
+.ytbm-tab-content {
+  display: none;
+  padding: 15px;
+  flex-grow: 1;
+  overflow-y: auto;
+}
+
+.ytbm-tab-content.active {
+  display: block;
+}
+
+/* Settings groups */
+.ytbm-settings-group {
+  margin-bottom: 20px;
+  padding-bottom: 15px;
+  border-bottom: 1px solid var(--light-border);
+}
+
+.ytbm-settings-group h3 {
+  margin-bottom: 10px;
+  font-size: 15px;
+}
+
+.ytbm-setting {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.ytbm-setting label:first-child {
+  min-width: 180px;
+  margin-right: 10px;
+}
+
+.ytbm-setting select,
+.ytbm-setting input[type="number"] {
+  padding: 6px;
+  border: 1px solid var(--light-border);
+  border-radius: 4px;
+}
+
+.ytbm-slider-container {
+  display: flex;
+  align-items: center;
+  flex-grow: 1;
+}
+
+.ytbm-slider-container input {
+  flex-grow: 1;
+  margin-right: 10px;
+}
+
+/* Default note sections */
+#defaultNoteSection,
+#defaultTagSection {
+  margin-left: 20px;
+  margin-top: 5px;
+  margin-bottom: 15px;
+}
+
+#defaultNoteText {
+  flex-grow: 1;
+  padding: 6px;
+  border: 1px solid var(--light-border);
+  border-radius: 4px;
+}
+
+#defaultNoteTag {
+  padding: 6px;
+  border: 1px solid var(--light-border);
+  border-radius: 4px;
+  min-width: 150px;
+}
+
+/* Video info and search */
+.ytbm-video-info {
+  margin-bottom: 15px;
+}
+
+.ytbm-video-info h2 {
+  font-size: 16px;
+  margin-bottom: 10px;
+  white-space: normal;
+  overflow: visible;
+  text-overflow: clip;
+  word-break: break-word;
+  line-height: 1.3;
+  max-height: none;
+}
+
+.ytbm-search-bar {
+  margin-bottom: 10px;
+}
+
+.ytbm-search-bar input {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid var(--light-border);
+  border-radius: 4px;
+}
+
+.ytbm-filters {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.ytbm-filters select {
+  padding: 6px;
+  border: 1px solid var(--light-border);
+  border-radius: 4px;
+}
+
+.ytbm-filters button {
+  padding: 6px 10px;
+  background: none;
+  border: 1px solid var(--light-border);
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.ytbm-filters button:hover {
+  background-color: var(--light-hover);
+}
+
+/* Bookmarks list */
+.ytbm-list {
+  min-height: 200px;
+  margin-bottom: 15px;
+}
+
+.ytbm-empty-state {
+  text-align: center;
+  padding: 40px 20px;
+  color: #808080;
+  font-style: italic;
+}
+
+.ytbm-bookmark-item {
+  display: flex;
+  padding: 10px;
+  border: 1px solid var(--light-border);
+  border-radius: 4px;
+  margin-bottom: 10px;
+  transition: background-color 0.2s;
+}
+
+.ytbm-bookmark-item:hover {
+  background-color: var(--light-hover);
+}
+
+.ytbm-bookmark-time {
+  font-weight: 500;
+  padding-right: 10px;
+  min-width: 50px;
+}
+
+.ytbm-bookmark-content {
+  flex-grow: 1;
+  padding-right: 10px;
+  overflow: hidden;
+}
+
+.ytbm-bookmark-note {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin-bottom: 5px;
+}
+
+.ytbm-bookmark-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+}
+
+.ytbm-tag {
+  font-size: 10px;
+  padding: 2px 6px;
+  background-color: #f0f0f0;
+  border-radius: 10px;
+  color: #333;
+  font-weight: 500;
+}
+
+.ytbm-tag.important {
+  background-color: #ffcccc;
+}
+
+.ytbm-tag.review {
+  background-color: #ccf2ff;
+}
+
+.ytbm-tag.funny {
+  background-color: #ffffcc;
+}
+
+.ytbm-tag.question {
+  background-color: #e6ccff;
+}
+
+.ytbm-tag.custom {
+  background-color: #ccffcc;
+}
+
+.ytbm-bookmark-actions {
+  display: flex;
+  gap: 5px;
+}
+
+.ytbm-bookmark-actions button {
+  width: 24px;
+  height: 24px;
+  background: none;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.2s;
+}
+
+.ytbm-bookmark-actions button:hover {
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+.ytbm-bookmark-jump {
+  color: var(--primary-color);
+}
+
+/* Tag management */
+.ytbm-tag-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+
+.ytbm-tag-item {
+  display: flex;
+  align-items: center;
+  background-color: #f0f0f0;
+  border-radius: 10px;
+  padding: 5px 10px;
+}
+
+.ytbm-tag-name {
+  margin-right: 5px;
+}
+
+.ytbm-tag-delete {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  width: 16px;
+  height: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+}
+
+.ytbm-tag-add {
+  display: flex;
+  gap: 5px;
+}
+
+.ytbm-tag-add input {
+  flex-grow: 1;
+  padding: 6px;
+  border: 1px solid var(--light-border);
+  border-radius: 4px;
+}
+
+.ytbm-tag-add button {
+  padding: 6px 10px;
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+/* All videos view */
+.ytbm-video-section {
+  margin-bottom: 10px;
+  border: 1px solid var(--light-border);
+  border-radius: 4px;
+  overflow: hidden;
+  position: relative;
+  transition: background-color 0.2s;
+}
+
+.ytbm-video-section.expanded {
+  background-color: rgba(0, 0, 0, 0.02);
+}
+
+.ytbm-video-header {
+  display: flex;
+  padding: 10px;
+  background-color: var(--light-hover);
+  cursor: pointer;
+  position: relative;
+}
+
+.ytbm-video-thumbnail {
+  width: 120px;
+  height: 68px;
+  margin-right: 10px;
+  background-color: #f0f0f0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  border-radius: 4px;
+  transition: opacity 0.2s;
+}
+
+.ytbm-video-header:hover .ytbm-video-thumbnail {
+  opacity: 0.8;
+}
+
+.ytbm-video-thumbnail img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.ytbm-video-details {
+  flex-grow: 1;
+}
+
+.ytbm-video-title {
+  font-weight: 500;
+  margin-bottom: 5px;
+  white-space: normal;
+  overflow: visible;
+  text-overflow: clip;
+  word-break: break-word;
+  line-height: 1.3;
+  max-height: none;
+}
+
+.ytbm-video-bookmarks {
+  font-size: 12px;
+  color: #606060;
+}
+
+.ytbm-video-bookmarks-list {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease-out;
+}
+
+.ytbm-video-section.expanded .ytbm-video-bookmarks-list {
+  max-height: 500px;
+  overflow-y: auto;
+  padding: 10px;
+}
+
+.ytbm-video-bookmarks-list .ytbm-bookmark-item {
+  border-left: none;
+  border-right: none;
+  border-radius: 0;
+  border-bottom: 1px solid var(--light-border);
+  margin-bottom: 5px;
+}
+
+.ytbm-video-bookmarks-list .ytbm-bookmark-item:last-child {
+  border-bottom: none;
+  margin-bottom: 0;
+}
+
+/* Export button in video section */
+.ytbm-video-export-btn {
+  position: absolute;
+  right: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  color: #606060;
+  font-size: 18px;
+  cursor: pointer;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+}
+
+.ytbm-video-export-btn:hover {
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+/* Pagination */
+.ytbm-pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.ytbm-pagination button {
+  padding: 5px 10px;
+  background: none;
+  border: 1px solid var(--light-border);
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.ytbm-pagination button:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+.ytbm-pagination span {
+  margin: 0 10px;
+  font-size: 12px;
+}
+
+/* Import/Export actions */
+.ytbm-actions {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+}
+
+.ytbm-actions button,
+.ytbm-import-label {
+  padding: 8px 15px;
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  text-align: center;
+  font-size: 13px;
+}
+
+.ytbm-actions button:hover,
+.ytbm-import-label:hover {
+  background-color: var(--dark-primary);
+}
+
+/* Settings actions */
+.ytbm-settings-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.ytbm-settings-actions button {
+  padding: 8px 15px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+#resetSettings {
+  background: none;
+  border: 1px solid var(--light-border);
+}
+
+#saveSettings {
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+}
+
+/* Help tab */
+.ytbm-help-section {
+  margin-bottom: 20px;
+}
+
+.ytbm-help-section h3 {
+  margin-bottom: 10px;
+  font-size: 15px;
+}
+
+.ytbm-help-section p {
+  margin-bottom: 10px;
+  line-height: 1.4;
+}
+
+.ytbm-help-section ul {
+  list-style-position: inside;
+  margin-bottom: 10px;
+}
+
+.ytbm-help-section li {
+  margin-bottom: 5px;
+}
+
+kbd {
+  background-color: #f7f7f7;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  box-shadow: 0 1px 0 rgba(0,0,0,0.2);
+  color: #333;
+  display: inline-block;
+  font-size: 11px;
+  font-family: Arial, sans-serif;
+  line-height: 1.4;
+  margin: 0 0.1em;
+  padding: 0.1em 0.6em;
+}
+
+/* Dark Mode Styles */
+body.dark-mode {
+  color: var(--dark-text);
+  background-color: var(--dark-bg);
+}
+
+body.dark-mode .ytbm-header,
+body.dark-mode .ytbm-tabs {
+  border-bottom-color: var(--dark-border);
+}
+
+body.dark-mode .ytbm-tab-btn {
+  color: var(--dark-text);
+}
+
+body.dark-mode .ytbm-tab-btn:hover {
+  background-color: var(--dark-hover);
+}
+
+body.dark-mode .ytbm-bookmark-item,
+body.dark-mode .ytbm-video-item,
+body.dark-mode .ytbm-video-section {
+  border-color: var(--dark-border);
+}
+
+body.dark-mode .ytbm-bookmark-item:hover {
+  background-color: var(--dark-hover);
+}
+
+body.dark-mode .ytbm-video-section.expanded {
+  background-color: rgba(255, 255, 255, 0.05);
+}
+
+body.dark-mode .ytbm-video-header {
+  background-color: var(--dark-hover);
+}
+
+body.dark-mode .ytbm-video-bookmarks-list .ytbm-bookmark-item {
+  border-bottom-color: var(--dark-border);
+}
+
+body.dark-mode .ytbm-bookmark-actions button {
+  color: #ff5555 !important;
+  background-color: transparent !important;
+}
+
+body.dark-mode .ytbm-bookmark-actions button:hover {
+  background-color: rgba(255, 255, 255, 0.1) !important;
+}
+
+body.dark-mode .ytbm-video-thumbnail {
+  background-color: var(--dark-secondary-bg);
+}
+
+body.dark-mode .ytbm-empty-state {
+  color: #aaaaaa;
+}
+
+body.dark-mode .ytbm-search-bar input,
+body.dark-mode .ytbm-filters select,
+body.dark-mode .ytbm-filters button,
+body.dark-mode .ytbm-pagination button,
+body.dark-mode .ytbm-setting select,
+body.dark-mode .ytbm-setting input,
+body.dark-mode .ytbm-tag-add input,
+body.dark-mode #resetSettings,
+body.dark-mode #defaultNoteText,
+body.dark-mode #defaultNoteTag {
+  background-color: var(--dark-secondary-bg);
+  color: var(--dark-text);
+  border-color: var(--dark-border);
+}
+
+body.dark-mode .ytbm-tag-item {
+  background-color: var(--dark-secondary-bg);
+}
+
+body.dark-mode .ytbm-settings-group {
+  border-bottom-color: var(--dark-border);
+}
+
+body.dark-mode kbd {
+  background-color: var(--dark-secondary-bg);
+  color: var(--dark-text);
+  border-color: var(--dark-border);
+  box-shadow: 0 1px 0 rgba(255,255,255,0.1);
+}
+
+body.dark-mode .ytbm-video-export-btn {
+  color: #ccc;
+}
+
+body.dark-mode .ytbm-video-export-btn:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+body.dark-mode .ytbm-note-toolbar button.active,
+body.dark-mode .ytbm-edit-toolbar button.active {
+  background-color: rgba(255, 255, 255, 0.1);
+  border: 1px solid #555;
+}

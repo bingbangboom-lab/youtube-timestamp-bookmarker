@@ -1,0 +1,58 @@
+{
+  "manifest_version": 3,
+  "name": "YT Timestamp Bookmarker",
+  "version": "1.0.0",
+  "description": "Save timestamps within YouTube videos as bookmarks with customizable markers and notes",
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "permissions": ["storage", "tabs"],
+  "host_permissions": ["*://*.youtube.com/*"],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "action": {
+    "default_popup": "popup/popup.html",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png"
+    }
+  },
+  "content_scripts": [
+    {
+      "matches": ["*://*.youtube.com/*"],
+      "js": ["content/content.js"],
+      "css": ["content/content.css"],
+      "run_at": "document_start"
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": ["icons/*", "content/*"],
+      "matches": ["*://*.youtube.com/*"]
+    }
+  ],
+  "commands": {
+    "add-bookmark": {
+      "suggested_key": {
+        "default": "Alt+S"
+      },
+      "description": "Add a bookmark at the current timestamp"
+    },
+    "prev-bookmark": {
+      "suggested_key": {
+        "default": "Alt+A"
+      },
+      "description": "Navigate to the previous bookmark"
+    },
+    "next-bookmark": {
+      "suggested_key": {
+        "default": "Alt+D"
+      },
+      "description": "Navigate to the next bookmark"
+    }
+  }
+}

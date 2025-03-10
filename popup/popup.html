@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>YouTube Timestamp Bookmarker</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="ytbm-popup">
+    <!-- Header -->
+    <header class="ytbm-header">
+      <h1>YouTube Timestamp Bookmarker</h1>
+      <div class="ytbm-toggle">
+        <label class="ytbm-switch">
+          <input type="checkbox" id="darkModeToggle">
+          <span class="ytbm-slider"></span>
+        </label>
+        <span>Dark Mode</span>
+      </div>
+    </header>
+
+    <!-- Tabs Navigation -->
+    <div class="ytbm-tabs">
+      <button class="ytbm-tab-btn active" data-tab="bookmarks">Bookmarks</button>
+      <button class="ytbm-tab-btn" data-tab="settings">Settings</button>
+      <button class="ytbm-tab-btn" data-tab="help">Help</button>
+    </div>
+
+    <div class="ytbm-content">
+      <!-- Bookmarks Tab -->
+      <div class="ytbm-tab-content active" id="bookmarks-tab">
+        <div class="ytbm-video-info">
+          <h2 id="videoTitle">No Video Open</h2>
+          <div class="ytbm-search-bar">
+            <input type="text" id="bookmarkSearch" placeholder="Search bookmarks...">
+          </div>
+          <div class="ytbm-filters">
+            <select id="tagFilter">
+              <option value="">All Tags</option>
+              <!-- Additional tag options will be added dynamically -->
+            </select>
+            <button id="showAllVideosBtn">View All Videos</button>
+          </div>
+        </div>
+
+        <div class="ytbm-list" id="bookmarksList">
+          <!-- Bookmarks will be populated here -->
+          <div class="ytbm-empty-state">
+            No bookmarks for this video yet.<br>
+            Press 'S' or click the bookmark button to add one.
+          </div>
+        </div>
+
+        <div class="ytbm-pagination">
+          <button id="prevPage" disabled>◀ Previous</button>
+          <span id="pageInfo">Page 1 of 1</span>
+          <button id="nextPage" disabled>Next ▶</button>
+        </div>
+
+        <div class="ytbm-actions">
+          <button id="exportBtn">Export Bookmarks</button>
+          <label for="importFile" class="ytbm-import-label">Import Bookmarks</label>
+          <input type="file" id="importFile" accept=".json" style="display: none;">
+        </div>
+      </div>
+
+      <!-- Settings Tab -->
+      <div class="ytbm-tab-content" id="settings-tab">
+        <!-- Marker Appearance Settings -->
+        <div class="ytbm-settings-group">
+          <h3>Marker Appearance</h3>
+          
+          <div class="ytbm-setting">
+            <label for="markerColor">Color:</label>
+            <input type="color" id="markerColor" value="#ff0000">
+          </div>
+          
+          <div class="ytbm-setting">
+            <label for="markerShape">Shape:</label>
+            <select id="markerShape">
+              <option value="circle">Circle</option>
+              <option value="square">Square</option>
+              <option value="triangle">Triangle</option>
+              <option value="ring">Ring</option>
+            </select>
+          </div>
+          
+          <div class="ytbm-setting">
+            <label for="markerSize">Size:</label>
+            <div class="ytbm-slider-container">
+              <input type="range" id="markerSize" min="3" max="12" value="6" step="1">
+              <span id="markerSizeValue">6</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tag Management Settings -->
+        <div class="ytbm-settings-group">
+          <h3>Tag Management</h3>
+          <div class="ytbm-tag-list" id="tagList">
+            <!-- Tags will be populated here -->
+          </div>
+          <div class="ytbm-tag-add">
+            <input type="text" id="newTagInput" placeholder="New tag name">
+            <button id="addTagBtn">Add</button>
+          </div>
+        </div>
+
+        <!-- Display Settings -->
+        <div class="ytbm-settings-group">
+          <h3>Display Settings</h3>
+          <div class="ytbm-setting">
+            <label for="bookmarksPerPage">Bookmarks per page:</label>
+            <select id="bookmarksPerPage">
+              <option value="5">5</option>
+              <option value="10" selected>10</option>
+              <option value="15">15</option>
+              <option value="20">20</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Bookmark Creation Settings -->
+        <div class="ytbm-settings-group">
+          <h3>Bookmark Creation Settings</h3>
+          
+          <div class="ytbm-setting">
+            <label for="showNoteEditor">Show note editor on add:</label>
+            <label class="ytbm-switch">
+              <input type="checkbox" id="showNoteEditor" checked>
+              <span class="ytbm-slider"></span>
+            </label>
+          </div>
+          
+          <div class="ytbm-setting" id="defaultNoteSection" style="display: none;">
+            <label for="defaultNoteText">Default note text:</label>
+            <input type="text" id="defaultNoteText" placeholder="Leave empty for no text">
+          </div>
+          
+          <div class="ytbm-setting" id="defaultTagSection" style="display: none;">
+            <label for="defaultNoteTag">Default tag:</label>
+            <select id="defaultNoteTag">
+              <option value="">No tag</option>
+              <!-- Tag options will be added dynamically -->
+            </select>
+          </div>
+          
+          <div class="ytbm-setting">
+            <label for="pauseOnBookmark">Pause video on bookmark:</label>
+            <label class="ytbm-switch">
+              <input type="checkbox" id="pauseOnBookmark" checked>
+              <span class="ytbm-slider"></span>
+            </label>
+          </div>
+        </div>
+
+        <!-- Settings Actions -->
+        <div class="ytbm-settings-actions">
+          <button id="resetSettings">Reset to Default</button>
+          <button id="saveSettings">Save Settings</button>
+        </div>
+      </div>
+
+      <!-- Help Tab -->
+      <div class="ytbm-tab-content" id="help-tab">
+        <div class="ytbm-help-section">
+          <h3>Keyboard Shortcuts</h3>
+          <ul>
+            <li><kbd>S</kbd> - Add bookmark at current timestamp</li>
+            <li><kbd>A</kbd> - Navigate to previous bookmark</li>
+            <li><kbd>D</kbd> - Navigate to next bookmark</li>
+          </ul>
+        </div>
+        
+        <div class="ytbm-help-section">
+          <h3>Using Bookmarks</h3>
+          <p>
+            Click on the bookmark button in the YouTube player controls or press <kbd>S</kbd> to save the current timestamp.
+            Add notes to your bookmarks to remember why you saved them.
+          </p>
+          <p>
+            Tags help you categorize bookmarks. Select one or more tags when creating or editing a bookmark.
+          </p>
+        </div>
+        
+        <div class="ytbm-help-section">
+          <h3>Tips</h3>
+          <ul>
+            <li>Hover over a marker on the progress bar to see the note preview</li>
+            <li>Click a marker to jump to that timestamp and edit the note</li>
+            <li>Use "View All Videos" to see bookmarks from other videos</li>
+            <li>Export your bookmarks regularly to back them up</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Templates -->
+  <template id="bookmarkTemplate">
+    <div class="ytbm-bookmark-item">
+      <div class="ytbm-bookmark-time"></div>
+      <div class="ytbm-bookmark-content">
+        <div class="ytbm-bookmark-note"></div>
+        <div class="ytbm-bookmark-tags"></div>
+      </div>
+      <div class="ytbm-bookmark-actions">
+        <button class="ytbm-bookmark-jump" title="Jump to this timestamp">▶</button>
+        <button class="ytbm-bookmark-edit" title="Edit bookmark">✎</button>
+        <button class="ytbm-bookmark-delete" title="Delete bookmark">🗑</button>
+      </div>
+    </div>
+  </template>
+
+  <template id="videoTemplate">
+    <div class="ytbm-video-item">
+      <div class="ytbm-video-thumbnail">
+        <img src="" alt="Video thumbnail">
+      </div>
+      <div class="ytbm-video-details">
+        <div class="ytbm-video-title"></div>
+        <div class="ytbm-video-bookmarks"></div>
+      </div>
+    </div>
+  </template>
+
+  <template id="tagTemplate">
+    <div class="ytbm-tag-item">
+      <span class="ytbm-tag-name"></span>
+      <button class="ytbm-tag-delete" title="Delete tag">×</button>
+    </div>
+  </template>
+
+  <script src="popup.js"></script>
+</body>
+</html>
